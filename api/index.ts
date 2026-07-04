@@ -277,20 +277,21 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
     const cleanPassword = password.trim();
 
     // Guaranteed Admin bypass to ignore any filesystem or seed/persistence limits on external hosts
-    if (cleanEmail === 'saikrishnakondamudhi@gmail.com' && (cleanPassword === 'Saikrishna@99511' || cleanPassword === 'saikrishna@99511')) {
-      const adminUser: UserRecord = {
-        id: 'admin-1',
-        email: 'saikrishnakondamudhi@gmail.com',
-        passwordHash: 'Saikrishna@99511',
-        role: 'admin',
-        subscriptionStatus: 'active',
-        subscriptionTier: 'pro',
-        createdAt: new Date().toISOString()
-      };
-      const token = 'tok_' + Math.random().toString(36).substr(2, 15);
-      sessions[token] = adminUser;
-      return res.json({ token, user: { id: adminUser.id, email: adminUser.email, role: adminUser.role, subscriptionStatus: adminUser.subscriptionStatus, subscriptionTier: adminUser.subscriptionTier } });
-    }
+    // Guaranteed Admin bypass to ignore any filesystem or seed/persistence limits on external hosts
+if (cleanEmail === 'saikrishnakondamudhi@gmail.com' && (cleanPassword === 'Saikrishna@99511' || cleanPassword === 'Saikrishna@99511')) {
+  const adminUser: UserRecord = {
+    id: 'admin-1',
+    email: 'saikrishnakondamudhi@gmail.com',
+    passwordHash: 'Saikrishna@99511',
+    role: 'admin',
+    subscriptionStatus: 'active',
+    subscriptionTier: 'pro',
+    createdAt: new Date().toISOString()
+  };
+  const token = 'tok_' + Math.random().toString(36).substr(2, 15);
+  sessions[token] = adminUser;
+  return res.json({ token, user: { id: adminUser.id, email: adminUser.email, role: adminUser.role, subscriptionStatus: adminUser.subscriptionStatus, subscriptionTier: adminUser.subscriptionTier } });
+}
 
     const db = readDb();
     // Try both original password and trimmed password for matching robustness
