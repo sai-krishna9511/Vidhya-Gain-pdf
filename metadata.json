@@ -1,0 +1,6 @@
+{
+  "name": "Vidhya Gain",
+  "description": "A comprehensive SaaS platform offering high-performance PDF and image tools with user management, subscription tiers, and usage analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
