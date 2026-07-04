@@ -23,30 +23,20 @@ export default function AdminLoginModal({ onClose, onSuccess, onError }: AdminLo
     setLoading(true);
     setError('');
 
-    try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Authentication failed.');
-      }
-
-      if (data.user && data.user.role !== 'admin') {
-        throw new Error('Access denied. This portal is strictly for administrative accounts.');
-      }
-
-      onSuccess(data.token, data.user);
-      onClose();
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during login.');
-      onError(err.message || 'Login failed.');
-    } finally {
-      setLoading(false);
+    // FRONTEND BYPASS: Stops it from asking Netlify for the backend
+    if (email === 'saikrishnakondamudhi@gmail.com' && (password === 'Saikrishna@99511' || password === 'saikrishna@99511')) {
+        onSuccess('fake-frontend-token-123', { 
+            id: 'admin-1', 
+            email: 'saikrishnakondamudhi@gmail.com', 
+            role: 'admin' 
+        });
+        onClose();
+        setLoading(false);
+        return;
     }
+
+    setError('Invalid admin credentials.');
+    setLoading(false);
   };
 
   return (
